@@ -3,7 +3,7 @@ FN = "input.txt"
 last_measurement = None
 increment_cnt = 0
 
-with open("input.txt","r") as file:
+with open(FN,"r") as file:
     lines = file.readlines()
     for line in lines:
         cur_measurement = int(line)
