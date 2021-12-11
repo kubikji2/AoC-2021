@@ -1,5 +1,6 @@
 FN = "input.txt"
 
+# get all neighbors, limited only by the map size
 def get_neighbors(col_idx, row_idx, n_cols, n_rows):
     neighs = []
     if col_idx - 1 >= 0:
@@ -12,11 +13,16 @@ def get_neighbors(col_idx, row_idx, n_cols, n_rows):
         neighs.append([row_idx+1,col_idx])
     return neighs
 
+# decides whether provided position is the lowest among its neighbors
 def is_lowest_risk(col_idx, row_idx, n_cols, n_rows, h_map):
     neighs = get_neighbors(col_idx,row_idx,n_cols,n_rows)
     neigh_values = [h_map[neigh[0]][neigh[1]] for neigh in neighs]
     return min(neigh_values) > h_map[row_idx][col_idx]
 
+# expand provided location in the map, e.g. returns its neighbors limited by:
+# - the map size
+# - the mountains (size 9)
+# - already explored locations
 def expand(col_idx, row_idx, n_cols, n_rows, h_map, explored):
     # get all possible neighbors
     neighs = get_neighbors(col_idx,row_idx,n_cols,n_rows)
@@ -26,6 +32,7 @@ def expand(col_idx, row_idx, n_cols, n_rows, h_map, explored):
     neighs = [neigh for neigh in neighs if not explored[neigh[0]][neigh[1]]]
     return neighs
 
+# just bfs
 def bfs(col_start, row_start, n_cols, n_rows, h_map, explored):
     open_list = [[row_start,col_start]]
     explored_tiles = 0
@@ -67,10 +74,11 @@ with open(FN,"r") as f:
     for row_idx in range(n_rows):
         for col_idx in range(n_cols):
             if is_lowest_risk(col_idx,row_idx,n_cols,n_rows,h_map):
+                # get basins using bfs from the lowest risk locations
                 explored_tiles = bfs(col_idx,row_idx,n_cols,n_rows,h_map,explored)
                 basins.append(explored_tiles)
     
-    # sort basing    
+    # sort basins
     basins.sort()
     
     # get last (biggest) basins

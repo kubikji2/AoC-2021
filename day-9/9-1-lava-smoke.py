@@ -1,5 +1,6 @@
 FN = "input.txt"
 
+# decides whether the location is lowest among its neighbors
 def is_lowest_risk(col_idx, row_idx, n_cols, n_rows, h_map):
     neighs = []
     if col_idx - 1 >= 0:
