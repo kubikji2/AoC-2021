@@ -1,0 +1,26 @@
+FN = "input.txt"
+
+with open(FN,"r") as f:
+    crabs = f.readline().split(",")
+    crabs = [int(s) for s in crabs]
+    #print(crabs)
+
+    # get most distant crab, e.g. the most distant possible optimum
+    most_distant_crab = max(crabs)+1
+
+    # for each possible location...
+    min_fuel = None
+    opt_idx = 0
+    for dist in range(most_distant_crab):
+        # compute current fuel consumption
+        _cur_fuel = 0
+        for crab_idx in crabs:
+            _dist = abs(crab_idx-dist)
+            # Gaus comes to save a day
+            _cur_fuel += (_dist*(_dist+1))//2
+
+        if min_fuel is None or _cur_fuel < min_fuel:
+            min_fuel = _cur_fuel
+            opt_idx = dist
+
+    print(opt_idx, min_fuel)
