@@ -5,8 +5,8 @@ with open(FN,"r") as f:
     crabs = [int(s) for s in crabs]
     #print(crabs)
 
+    # get most distant crab, e.g. the most distant possible optimum
     most_distant_crab = max(crabs)+1
-    crabs_at_pos =[0 for _ in range(most_distant_crab)]
 
     # for each possible location...
     min_fuel = None
