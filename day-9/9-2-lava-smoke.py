@@ -49,8 +49,7 @@ def bfs(col_start, row_start, n_cols, n_rows, h_map, explored):
         # get neighbors
         neighs = expand(cur_location[1],cur_location[0],n_cols,n_rows,h_map,explored)
         # add neighs to the open list
-        for neigh in neighs:
-            open_list.append(neigh)
+        open_list = neighs + open_list
     return explored_tiles
 
 with open(FN,"r") as f:
